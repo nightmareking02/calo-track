@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- <a href="{% url 'addcontent' %}"><button>ADD NEW FOOD</button></a>
+<a href="{% url 'track' %}"><button>TRACK FOOD</button></a>
+<div class="tab">
+<table>
+    <tr><th>Food</th>
+        <th>Quantity</th>
+        <th>Protein</th>
+        <th>Carbs</th>
+        <th>Fats</th>
+        <th>Nutrients</th>
+        <th>Vitamins</th>
+    </tr>
+    {% for i in cal_model %}
+      
+    <tr>
+        
+        <td>{{i.name}}</td>
+        <td>{{i.quantity}}</td>
+        <td>{{i.protien}}</td>
+        <td>{{i.carbs}}</td>
+        <td>{{i.fat}}</td>
+        <td>{{i.nutrients}}</td>
+        <td>{{i.vitamins}}</td>
+    </tr> 
+    {% endfor %} -->
+    <div class="row">
+        {% for i in cal_model %}
+        <div class="col-md-4">
+            <div class="card card-body">
+                <img src="{{ i.img }} " alt="" style="height: 200px;width: 280px;position: relative;left: 80px;">
+                <br>
+                <h4><a href="{% url 'view' pk=i.id %}">{{i.name}}</a></h4>
+                
+                <div style="display: flex;">
+                    <h5 style="margin-right: 5px;">Type:</h5>
+                    <h5>{{ i.type }}</h5>
+                </div>
+                <form action="{% url 'fav' pk=i.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="food_id" value='{{ i.id }}'>
+                <button type="submit" style="position: absolute;bottom: 20px;right: 20px;background-color: transparent;border-color: transparent;">
+                    {% if is_fav %}
+                    <img src="https://cdn-icons-png.flaticon.com/128/833/833472.png" alt="" style="position: relative;height: 30px;width: 30px;left: 0px;bottom: 0px;">
+                    {% else %}
+                    <img src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png" alt="" style="position: relative;height: 30px;width: 30px;left: 0px;bottom: 0px;">
+                    {% endif %}
+
+                </button>
+                </form>
+            </div>
+
+    </div>
+    {% endfor %} 
+    </div>
+{% endblock content %}
+    

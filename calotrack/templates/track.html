@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="inp">
+    <form method="POST">
+        {%csrf_token%}
+        {{form.as_p}}
+        <br>
+        <input type="submit" value="SUBMIT">
+    </form>
+</div>
+<div class="main" style="display:flex;flex-direction: row;align-items: center;align-content: space-around;">
+    <div class="tab" style="height:fit-content;width: fit-content;">
+        <table>
+        <tr><th>Food</th>
+            <th>Quantity</th>
+            <th>Protein</th>
+            <th>Carbs</th>
+            <th>Fats</th>
+            <th>Nutrients</th>
+            <th>Vitamins</th>
+            <th>DELETE</th>
+            <th>EDIT</th>
+        </tr>
+            {% for i in food_item %}
+        <tr>
+
+            <td>{{i.name}}</td>
+            <td>{{i.quantity}}</td>
+            <td>{{i.protien}}</td>
+            <td>{{i.carbs}}</td>
+            <td>{{i.fat}}</td>
+            <td>{{i.nutrients}}</td>
+            <td>{{i.vitamins}}</td>
+            <td><a href="{% url 'delete' pk=i.id %}"><button>DELETE</button></a></td>
+            <td><a href="{% url 'update' pk=i.id %}"><button>EDIT</button></a></td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>Total</td>
+            <td></td>
+            <td id="p">{{totalp}}</td>
+            <td id="c">{{totalc}}</td>
+            <td id="f">{{totalf}}</td>
+        </tr>
+</table></div>
+<div style="height:500px;width:500px;">
+<h2>This is food breakdown: </h2>
+<canvas id="myChart"></canvas>
+</div>    
+<script>
+const ctx = document.getElementById('myChart');
+new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: ['Protien','Carbs','Fat'],
+    datasets: [{
+      label: '# of Votes',
+      data: [{{totalp}},{{totalc}},{{totalf}}],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+</script>        
+
+</div>
+
+{% endblock content %}
+    

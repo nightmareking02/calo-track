@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    {% for item in res %}
+    <div class="col-md-12">
+        <div class="card card-body">
+            {% if item.img %}
+            <img src="{{ item.img.url }}" alt="no img">
+            {% else %}
+                <p>no image</p>
+            {% endif %}
+            <br>
+            <h4>{{item.name}}</h4>
+            <span>Protein : {{item.protien}}</span>
+            <span>Carbs : {{item.carbs}}</span>
+            <span>Fat : {{item.fat}}</span>
+            <span>Nutrients : {{item.nutrients}}</span>
+            <span>Vitamins : {{item.vitamins}}</span>
+            <div style="display: flex;">
+                <h5 style="margin-right: 5px;">Type:</h5>
+                <h5>{{ i.type }}</h5>
+
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}
